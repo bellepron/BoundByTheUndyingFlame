@@ -17,7 +17,7 @@ namespace CKY_Pooling
             bool isDirty = false;
             poolManager = (CKY_PoolManager)target;
 
-            CKY_EditorUtility.DrawTexture(CKY_EditorAssets.poolManagerItemLogo);
+            CKY_PoolManager_EditorUtility.DrawTexture(CKY_PoolManager_EditorAssets.poolManagerItemLogo);
 
             poolManager.autoAddMissingPrefabPool = EditorGUILayout.Toggle("Auto Add Missing Items", poolManager.autoAddMissingPrefabPool);
             poolManager.showDebugLog = EditorGUILayout.Toggle("Show Debug Log", poolManager.showDebugLog);
@@ -33,11 +33,11 @@ namespace CKY_Pooling
             // Add expand / collapse buttons if there are items in the list
             if (poolManager.prefabPoolOptions.Count > 0)
             {
-                CKY_EditorUtility.BeginColor(CKY_EditorAssets.shiftPosColor);
+                CKY_PoolManager_EditorUtility.BeginColor(CKY_PoolManager_EditorAssets.shiftPosColor);
                 var masterCollapse = GUILayout.Button("Collapse All", EditorStyles.toolbarButton, GUILayout.Width(80));
 
                 var masterExpand = GUILayout.Button("Expand All", EditorStyles.toolbarButton, GUILayout.Width(80));
-                CKY_EditorUtility.EndColor();
+                CKY_PoolManager_EditorUtility.EndColor();
 
                 if (masterExpand)
                 {
@@ -63,13 +63,13 @@ namespace CKY_Pooling
             //only enable adding of pools when the application is NOT in play state
             if (!Application.isPlaying) //During Editor
             {
-                CKY_EditorUtility.BeginColor(CKY_EditorAssets.addBtnColor);
+                CKY_PoolManager_EditorUtility.BeginColor(CKY_PoolManager_EditorAssets.addBtnColor);
                 if (GUILayout.Button("Add", EditorStyles.toolbarButton, GUILayout.Width(32)))
                 {
                     poolManager.prefabPoolOptions.Insert(0, new CKY_PrefabPoolOption()); //add to the top of the list
                     isDirty = true;
                 }
-                CKY_EditorUtility.EndColor();
+                CKY_PoolManager_EditorUtility.EndColor();
             }
 
             EditorGUILayout.EndHorizontal();
@@ -94,7 +94,7 @@ namespace CKY_Pooling
                     var name = prefabPoolOption.prefabTransform == null ? "[NO PREFAB]" : prefabPoolOption.prefabTransform.name;
                     prefabPoolOption.isPoolExpanded = EditorGUILayout.Foldout(prefabPoolOption.isPoolExpanded, name, EditorStyles.foldout);
 
-                    CKY_EditorUtility.BeginColor(CKY_EditorAssets.shiftPosColor);
+                    CKY_PoolManager_EditorUtility.BeginColor(CKY_PoolManager_EditorAssets.shiftPosColor);
 
                     if (i > 0)
                     {
@@ -122,24 +122,24 @@ namespace CKY_Pooling
                         GUILayout.Space(24);
                     }
 
-                    CKY_EditorUtility.EndColor();
+                    CKY_PoolManager_EditorUtility.EndColor();
 
                     //only enable adding or deleting of pools when the application is NOT in play state
                     if (!Application.isPlaying) //During Editor
                     {
-                        CKY_EditorUtility.BeginColor(CKY_EditorAssets.addBtnColor);
+                        CKY_PoolManager_EditorUtility.BeginColor(CKY_PoolManager_EditorAssets.addBtnColor);
                         if (GUILayout.Button("Add", EditorStyles.toolbarButton, GUILayout.Width(32)))
                         {
                             i_ToInsertAt = i + 1;
                         }
-                        CKY_EditorUtility.EndColor();
+                        CKY_PoolManager_EditorUtility.EndColor();
 
-                        CKY_EditorUtility.BeginColor(CKY_EditorAssets.delBtnColor);
+                        CKY_PoolManager_EditorUtility.BeginColor(CKY_PoolManager_EditorAssets.delBtnColor);
                         if (GUILayout.Button("Del", EditorStyles.toolbarButton, GUILayout.Width(32)))
                         {
                             i_ToRemove = i;
                         }
-                        CKY_EditorUtility.EndColor();
+                        CKY_PoolManager_EditorUtility.EndColor();
                     }
 
                     EditorGUILayout.EndHorizontal();
@@ -148,7 +148,7 @@ namespace CKY_Pooling
                     {
                         EditorGUI.indentLevel = 1;
 
-                        CKY_EditorUtility.DrawTexture(CKY_EditorAssets.poolItemTop);
+                        CKY_PoolManager_EditorUtility.DrawTexture(CKY_PoolManager_EditorAssets.poolItemTop);
 
                         EditorGUILayout.BeginHorizontal();
                         GUILayout.Space(12); //offset the prefab preview towards the center
@@ -160,7 +160,7 @@ namespace CKY_Pooling
                         }
                         else
                         {
-                            prefabPreviewIcon = CKY_EditorUtility.LoadTexture(CKY_EditorAssets.missingPrefabIcon);
+                            prefabPreviewIcon = CKY_PoolManager_EditorUtility.LoadTexture(CKY_PoolManager_EditorAssets.missingPrefabIcon);
                         }
 
                         while (AssetPreview.IsLoadingAssetPreviews())
@@ -171,13 +171,13 @@ namespace CKY_Pooling
                             }
                             else
                             {
-                                prefabPreviewIcon = CKY_EditorUtility.LoadTexture(CKY_EditorAssets.missingPrefabIcon);
+                                prefabPreviewIcon = CKY_PoolManager_EditorUtility.LoadTexture(CKY_PoolManager_EditorAssets.missingPrefabIcon);
                             }
 
                             System.Threading.Thread.Sleep(5);
                         }
 
-                        CKY_EditorUtility.DrawTexture(prefabPreviewIcon, 100, 100);
+                        CKY_PoolManager_EditorUtility.DrawTexture(prefabPreviewIcon, 100, 100);
 
                         EditorGUILayout.BeginVertical(GUILayout.MinHeight(prefabPreviewIcon.height));
 
@@ -255,7 +255,7 @@ namespace CKY_Pooling
                         EditorGUILayout.EndVertical();
                         EditorGUILayout.EndHorizontal();
 
-                        CKY_EditorUtility.DrawTexture(CKY_EditorAssets.poolItemBottom);
+                        CKY_PoolManager_EditorUtility.DrawTexture(CKY_PoolManager_EditorAssets.poolItemBottom);
                     }
                 }
 

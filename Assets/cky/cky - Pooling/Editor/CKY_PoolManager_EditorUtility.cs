@@ -1,36 +1,10 @@
-﻿using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 using System.IO;
 
 namespace CKY_Pooling
 {
-    public class TextureData
-    {
-        public Texture tex;
-        public string path;
-
-        public TextureData(Texture t, string s)
-        {
-            tex = t;
-            path = s;
-        }
-    }
-
-    public static class CKY_EditorAssets
-    {
-        public static string assetName = "cky/cky - Pooling";
-
-        public static TextureData poolManagerItemLogo = new TextureData(null, "CKY Pooling Logo.psd");
-        public static TextureData missingPrefabIcon = new TextureData(null, "missingPrefabIcon.psd");
-        public static TextureData poolItemTop = new TextureData(null, "Pool Item Top Logo.psd");
-        public static TextureData poolItemBottom = new TextureData(null, "Pool Item Bottom Logo.psd");
-
-        public static Color addBtnColor = new Color(0, 1f, 0);
-        public static Color delBtnColor = new Color(1f, 0, 0);
-        public static Color shiftPosColor = new Color(0.5f, 0.5f, 0.5f);
-    }
-
-    public static class CKY_EditorUtility
+    public static class CKY_PoolManager_EditorUtility
     {
         public static void DrawTexture(Texture tex)
         {
@@ -58,19 +32,19 @@ namespace CKY_Pooling
             {
                 if (!File.Exists("CKY CSP/" + texData.path))
                 {
-                    if (!Directory.Exists("Assets/Editor Default Resources/" + CKY_EditorAssets.assetName))
+                    if (!Directory.Exists("Assets/Editor Default Resources/" + CKY_PoolManager_EditorAssets.assetName))
                     {
-                        Directory.CreateDirectory("Assets/Editor Default Resources/" + CKY_EditorAssets.assetName);
+                        Directory.CreateDirectory("Assets/Editor Default Resources/" + CKY_PoolManager_EditorAssets.assetName);
                     }
 
                     AssetDatabase.Refresh();
 
-                    FileInfo fInfo = new FileInfo("Assets/" + CKY_EditorAssets.assetName + "/Editor/Texture Resources/" + texData.path);
-                    fInfo.CopyTo("Assets/Editor Default Resources/" + CKY_EditorAssets.assetName + "/" + texData.path, true);
+                    FileInfo fInfo = new FileInfo("Assets/" + CKY_PoolManager_EditorAssets.assetName + "/Editor/Texture Resources/" + texData.path);
+                    fInfo.CopyTo("Assets/Editor Default Resources/" + CKY_PoolManager_EditorAssets.assetName + "/" + texData.path, true);
 
                     AssetDatabase.Refresh();
 
-                    texData.tex = EditorGUIUtility.LoadRequired(CKY_EditorAssets.assetName + "/" + texData.path) as Texture;
+                    texData.tex = EditorGUIUtility.LoadRequired(CKY_PoolManager_EditorAssets.assetName + "/" + texData.path) as Texture;
                 }
             }
 
