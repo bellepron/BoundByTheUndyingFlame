@@ -18,7 +18,7 @@ namespace CKY_Pooling
 
     public static class CKY_EditorAssets
     {
-        public static string assetName = "CKY Pooling";
+        public static string assetName = "cky/cky - Pooling";
 
         public static TextureData poolManagerItemLogo = new TextureData(null, "CKY Pooling Logo.psd");
         public static TextureData missingPrefabIcon = new TextureData(null, "missingPrefabIcon.psd");
