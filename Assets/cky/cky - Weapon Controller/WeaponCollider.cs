@@ -1,5 +1,5 @@
 
-public class WeaponCollider : WeaponCollider_Abstract
-{
+//public class WeaponCollider : WeaponCollider_Abstract
+//{
 
-}
+//}

@@ -1,21 +1,21 @@
-using UnityEditor;
-using UnityEngine;
+//using UnityEditor;
+//using UnityEngine;
 
-[CustomEditor(typeof(HandPoserController))]
-public class HandPoserControllerEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
+//[CustomEditor(typeof(HandPoserController))]
+//public class HandPoserControllerEditor : Editor
+//{
+//    public override void OnInspectorGUI()
+//    {
+//        DrawDefaultInspector();
 
-        HandPoserController posRotSetterTool = (HandPoserController)target;
+//        HandPoserController posRotSetterTool = (HandPoserController)target;
 
-        GUILayout.Space(25);
-        if (GUILayout.Button("Set"))
-        {
-            posRotSetterTool.Set();
-        }
+//        GUILayout.Space(25);
+//        if (GUILayout.Button("Set"))
+//        {
+//            posRotSetterTool.Set();
+//        }
 
-        EditorUtility.SetDirty(target);
-    }
-}
+//        EditorUtility.SetDirty(target);
+//    }
+//}

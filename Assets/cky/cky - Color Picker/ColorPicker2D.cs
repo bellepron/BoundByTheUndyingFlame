@@ -31,14 +31,14 @@ namespace cky.CarCustomization
         {
             UpdateColor(eventData);
 
-            EventBus.OnChange_LightingColor_EventTrigger(selectedColor);
+            //EventBus.OnChange_LightingColor_EventTrigger(selectedColor);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
             UpdateColor(eventData);
 
-            EventBus.OnChange_LightingColor_EventTrigger(selectedColor);
+            //EventBus.OnChange_LightingColor_EventTrigger(selectedColor);
         }
 
         private void UpdateColor(PointerEventData eventData)

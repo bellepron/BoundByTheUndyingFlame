@@ -169,7 +169,7 @@ namespace cky.Reuseables.Extension
 
             actorTr.TurnToThis(targetPos, rotationSpeed);
 
-            rb.velocity = actorTr.forward * moveSpeed;
+            rb.linearVelocity = actorTr.forward * moveSpeed;
         }
 
         public static bool CloseToThisXZ(this Transform actorTr, Vector3 targetPos, float targetDistance)
