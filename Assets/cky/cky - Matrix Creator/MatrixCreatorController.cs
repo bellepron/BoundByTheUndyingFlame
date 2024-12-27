@@ -6,8 +6,8 @@ namespace cky.MatrixCreation
     {
         //[field: SerializeField] public MatrixCreator MatrixCreator { get; set; }
 
-        [field: SerializeField] public MatrixSettings Settings { get; set; }
-        [field: SerializeField] public Transform ItemPrefab { get; set; }
+        [field: SerializeField] public MatrixSettings Settings { get; private set; }
+        [field: SerializeField] public Transform ItemPrefab { get; private set; }
         [HideInInspector] public string ItemTag;
         [HideInInspector] public GameObject[] Items;
         [HideInInspector] public bool UseScale = false;
@@ -44,7 +44,7 @@ namespace cky.MatrixCreation
                 Settings.cells_ItemIndexes[i] = new ItemIndexes();
             }
 
-            FindObjectOfType<MatrixCreator>().AssignItemsToCellsTo_ScriptableObject(this, FindObjectOfType<MatrixCreatorManager>());
+            FindFirstObjectByType<MatrixCreator>().AssignItemsToCellsTo_ScriptableObject(this, FindFirstObjectByType<MatrixCreatorManager>());
         }
 
         #endregion
