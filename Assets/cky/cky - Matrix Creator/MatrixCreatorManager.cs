@@ -1,10 +1,11 @@
-using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace cky.MatrixCreation
 {
     public class MatrixCreatorManager : MonoBehaviour
     {
+        [field: SerializeField] public MatrixSettings MatrixSettings { get; private set; }
         [field: SerializeField] public Transform PlayerTransform { get; set; }
         [field: SerializeField] public MatrixCell PlayerCell_Previous { get; set; }
         [field: SerializeField] public MatrixCell PlayerCell_Current { get; set; }
@@ -32,6 +33,8 @@ namespace cky.MatrixCreation
         [Space(15)]
         [Header("Controllers")]
         public MatrixItemData[] matrixItemDatas;
+        public MatrixItemTypes[] matrixItemTypes;
+        public int matrixItemDatasLength;
 
         private void Awake()
         {
@@ -45,19 +48,11 @@ namespace cky.MatrixCreation
 
         public void Initialize(Transform playerTransform)
         {
-            AwakeFunctions();
-
             PlayerTransform = playerTransform;
 
             MatrixCreator.Find_PlayerCell();
 
             InvokeRepeating(nameof(Toggle), 0, executionFrequency);
-        }
-
-        private void AwakeFunctions()
-        {
-            CreateMatrixCreator();
-            MatrixCreator.Create(this);
         }
 
         private void Toggle()
@@ -71,24 +66,28 @@ namespace cky.MatrixCreation
 
         public void MatrixSet()
         {
+            matrixItemDatasLength = matrixItemDatas.Length;
+
             CreateMatrixCreator();
 
-            MatrixCreator.Create(this);
+            MatrixSettings.Set(this, Dimension_I, Dimension_J);
 
-            IMatrixItem[] allMatrixItems = (IMatrixItem[])FindObjectsByType(typeof(MatrixItem), FindObjectsSortMode.None);
-            Debug.Log($"MatrixItem - All count: {allMatrixItems.Length}");
+            MatrixCreator.CompleteMatrix();
 
-            foreach (var controller in matrixItemDatas)
-            {
-                controller.GetItems(Dimension_I, Dimension_J, allMatrixItems, MatrixCreator);
-            }
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(this);
+            EditorUtility.SetDirty(MatrixCreator);
+#endif
         }
+
         private void CreateMatrixCreator()
         {
             for (int i = transform.childCount - 1; i >= 0; i--) DestroyImmediate(transform.GetChild(i).gameObject);
             MatrixCreatorGO = new GameObject($"Matrix Creator");
             MatrixCreatorGO.transform.SetParent(transform, false);
             MatrixCreator = MatrixCreatorGO.AddComponent<MatrixCreator>();
+
+            MatrixCreator.Create(this);
         }
 
         #endregion

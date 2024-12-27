@@ -70,8 +70,20 @@ namespace cky.MatrixCreation
                     );
                     cellGO.name = $"Cell [{i},{j}]";
                     MatrixCell cell = cellGO.GetComponent<MatrixCell>();
-                    cell.Init(_m, i, j);
                     _m.Matrix[i, j] = cell;
+
+                    cell.Init(_m, i, j);
+                }
+            }
+        }
+
+        public void CompleteMatrix()
+        {
+            for (int i = 0; i < _m.Dimension_I; i++)
+            {
+                for (int j = 0; j < _m.Dimension_J; j++)
+                {
+                    _m.Matrix[i, j].Init2();
                 }
             }
         }
@@ -120,21 +132,7 @@ namespace cky.MatrixCreation
             }
         }
 
-        public void AssignItemsToCellsTo_ScriptableObject(MatrixItemData matricItemData)
-        {
-            var itemPositions = matricItemData.Settings.positions;
-            var itemsCount = matricItemData.Settings.positions.Length;
-            for (int i = 0; i < itemsCount; i++)
-            {
-                var indices = Find_XZ_WithPosition(itemPositions[i]);
 
-                if (indices.I >= 0 && indices.I < _m.Dimension_I && indices.J >= 0 && indices.J < _m.Dimension_J)
-                {
-                    var currentCellItemIndexes = matricItemData.Settings.cells_ItemIndexes[indices.I * matricItemData.Settings.Dimension_J + indices.J];
-                    currentCellItemIndexes.Indexes.Add(i);
-                }
-            }
-        }
 
         private MatrixIndex Find_XZ(Transform itemTr)
         {
@@ -146,7 +144,7 @@ namespace cky.MatrixCreation
             return new MatrixIndex(iIndex, jIndex);
         }
 
-        private MatrixIndex Find_XZ_WithPosition(Vector3 itemPosition)
+        public MatrixIndex Find_XZ_WithPosition(Vector3 itemPosition)
         {
             // Objelerin dünya konumunu deðil, yerel konumunu kullanarak hücreye yerleþtir
             Vector3 localPosition = transform.InverseTransformPoint(itemPosition);
@@ -155,6 +153,24 @@ namespace cky.MatrixCreation
 
             return new MatrixIndex(iIndex, jIndex);
         }
+
+
+
+        public void Find_PlayerCell()
+        {
+            // Dünya konumunu MatrixCreator'ýn yerel konumuna dönüþtür.
+            var localPosition = transform.InverseTransformPoint(_m.PlayerTransform.position);
+            var pCell_I = Mathf.FloorToInt((localPosition.z + _m.AreaWidth_I * 0.5f) / _m.AreaWidth_I * _m.Dimension_I);
+            var pCell_J = Mathf.FloorToInt((localPosition.x + _m.AreaWidth_J * 0.5f) / _m.AreaWidth_J * _m.Dimension_J);
+
+            if (pCell_I >= 0 && pCell_I < _m.Dimension_I && pCell_J >= 0 && pCell_J < _m.Dimension_J)
+            {
+                _m.PlayerCell_Current = _m.Matrix[pCell_I, pCell_J];
+            }
+
+            //Debug.Log($"i:{_imc.PlayerCell_I} - j:{_imc.PlayerCell_J}");
+        }
+
 
 
         public void ToggleCellAndNeighbours()
@@ -175,37 +191,20 @@ namespace cky.MatrixCreation
                 {
                     if (!_openCells_Previous.Contains(cll))
                     {
-                        _m.Matrix[cll.I, cll.J].Open();
+                        _m.Matrix[cll.i, cll.J].Open();
                     }
                 }
                 foreach (var cll in _openCells_Previous)
                 {
                     if (!_openCells_Current.Contains(cll))
                     {
-                        _m.Matrix[cll.I, cll.J].Close();
+                        _m.Matrix[cll.i, cll.J].Close();
                     }
                 }
 
                 _m.PlayerCell_Previous = _m.PlayerCell_Current;
                 _openCells_Previous = new List<MatrixCell>(_openCells_Current);
             }
-        }
-
-
-
-        public void Find_PlayerCell()
-        {
-            // Dünya konumunu MatrixCreator'ýn yerel konumuna dönüþtür.
-            var localPosition = transform.InverseTransformPoint(_m.PlayerTransform.position);
-            var pCell_I = Mathf.FloorToInt((localPosition.z + _m.AreaWidth_I * 0.5f) / _m.AreaWidth_I * _m.Dimension_I);
-            var pCell_J = Mathf.FloorToInt((localPosition.x + _m.AreaWidth_J * 0.5f) / _m.AreaWidth_J * _m.Dimension_J);
-
-            if (pCell_I >= 0 && pCell_I < _m.Dimension_I && pCell_J >= 0 && pCell_J < _m.Dimension_J)
-            {
-                _m.PlayerCell_Current = _m.Matrix[pCell_I, pCell_J];
-            }
-
-            //Debug.Log($"i:{_imc.PlayerCell_I} - j:{_imc.PlayerCell_J}");
         }
 
     }

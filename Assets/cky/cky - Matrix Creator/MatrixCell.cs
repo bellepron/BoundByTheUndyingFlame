@@ -1,6 +1,8 @@
-using CKY_Pooling;
 using System.Collections.Generic;
+using CKY_Pooling;
+using System.Linq;
 using UnityEngine;
+using UnityEditor;
 
 namespace cky.MatrixCreation
 {
@@ -16,48 +18,37 @@ namespace cky.MatrixCreation
         public MatrixCreatorManager Manager;
 
         [Space(5)]
-        public int I;
+        public int i;
         public int J;
         public List<MatrixCell> neighbours = new List<MatrixCell>();
 
         [Space(5)]
-        [SerializeField] ItemTransforms[] itemTransforms_s;
+        [SerializeField] MatrixData_Type[] matrixData_Types;
 
-        [SerializeField] ItemIndexes[] itemIndexes_s;
+        [Space(5)]
+        [SerializeField] List<Transform> activeObjects = new List<Transform>();
+
         bool _active;
 
-        public void Init(MatrixCreatorManager manager, int i, int j)
+        public void Init(MatrixCreatorManager manager, int I, int J)
         {
             Manager = manager;
-            I = i;
-            J = j;
+            this.i = I;
+            this.J = J;
+        }
 
-            itemIndexes_s = new ItemIndexes[manager.matrixItemDatas.Length];
+        public void Init2()
+        {
+            matrixData_Types = new MatrixData_Type[Manager.matrixItemDatasLength];
+            for (int i = 0; i < Manager.matrixItemDatasLength; i++)
+            {
+                matrixData_Types[i] = new MatrixData_Type(Manager.matrixItemTypes[i]);
+                matrixData_Types[i].matrixItemIndexesAndTransforms = Manager.MatrixSettings.matrixData_Type[i].matrixItemIndexesAndTransforms.Where(n => n.I == i && n.J == J).ToList();
+            }
 
-            for (int k = 0; k < itemIndexes_s.Length; k++)
-            {
-                //Debug.Log($"{I} - {J}");
-                if (Manager.matrixItemDatas[k] != null)
-                {
-                    if (Manager.matrixItemDatas[k].Settings)
-                    {
-                        itemIndexes_s[k] = Manager.matrixItemDatas[k].Settings.cells_ItemIndexes[I * Manager.Dimension_J + J];
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"{Manager.matrixItemDatas[k]} Settings parameter is null.");
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning($"{Manager.matrixItemDatas[k]} is null.");
-                }
-            }
-            itemTransforms_s = new ItemTransforms[manager.matrixItemDatas.Length];
-            for (int k = 0; k < itemTransforms_s.Length; k++)
-            {
-                itemTransforms_s[k] = new ItemTransforms();
-            }
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(this);
+#endif
         }
 
         public void Open()
@@ -65,41 +56,24 @@ namespace cky.MatrixCreation
             _active = true;
             //Debug.Log($"Opened - {I}:{J}");
 
-            for (int k = 0; k < itemIndexes_s.Length; k++)
-            {
-                if (itemIndexes_s[k] != null)
-                {
-                    foreach (int i in itemIndexes_s[k].Indexes)
-                    {
-                        var controller = Manager.matrixItemDatas[k];
-                        if (controller.WillCreate)
-                        {
-                            var settings = controller.Settings;
-                            if (controller.ItemPrefab)
-                            {
-                                var item = CKY_PoolManager.Spawn(controller.ItemPrefab, settings.positions[i], settings.rotations[i]);
-                                if (controller.UseScale) item.localScale = settings.scales[i];
+            var length = matrixData_Types.Length;
 
-                                if (item.TryGetComponent<IMatrixItem>(out var iMatrixItem))
-                                {
-                                    iMatrixItem.ReSpawn();
-                                }
-                                itemTransforms_s[k].items.Add(item);
-                            }
-                            else
-                            {
-                                Debug.LogWarning($"{controller} ItemPrefab is null.");
-                            }
-                        }
-                        else
-                        {
-                            Debug.LogWarning($"{controller} WillCreate is false.");
-                        }
-                    }
-                }
-                else
+            for (int i = 0; i < length; i++)
+            {
+                var itemPrefab = Manager.matrixItemDatas[i].ItemPrefab;
+                var elements = matrixData_Types[i].matrixItemIndexesAndTransforms;
+
+                foreach (var element in elements)
                 {
-                    Debug.LogWarning($"{itemIndexes_s} {k}. element is null.");
+                    var obj = CKY_PoolManager.Spawn(itemPrefab, element.position, element.rotation);
+                    if (Manager.matrixItemDatas[i].UseScale) obj.localScale = element.scale;
+
+                    if (obj.TryGetComponent<IMatrixItem>(out var iMatrixItem))
+                    {
+                        iMatrixItem.ReSpawn();
+                    }
+
+                    activeObjects.Add(obj);
                 }
             }
         }
@@ -109,18 +83,12 @@ namespace cky.MatrixCreation
             _active = false;
             //Debug.Log($"Closed - {I}:{J}");
 
-            foreach (var c in itemTransforms_s)
+            foreach (var obj in activeObjects)
             {
-                foreach (var item in c.items)
-                {
-                    CKY_PoolManager.Despawn(item);
-                }
+                CKY_PoolManager.Despawn(obj);
             }
 
-            foreach (var c in itemTransforms_s)
-            {
-                c.items.Clear();
-            }
+            activeObjects.Clear();
         }
 
 
