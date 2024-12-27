@@ -120,18 +120,17 @@ namespace cky.MatrixCreation
             }
         }
 
-        public void AssignItemsToCellsTo_ScriptableObject(MatrixCreatorController mcc, MatrixCreatorManager mcm)
+        public void AssignItemsToCellsTo_ScriptableObject(MatrixItemData matricItemData)
         {
-            _m = mcm;
-            var itemPositions = mcc.Settings.positions;
-            var itemsCount = mcc.Settings.positions.Length;
+            var itemPositions = matricItemData.Settings.positions;
+            var itemsCount = matricItemData.Settings.positions.Length;
             for (int i = 0; i < itemsCount; i++)
             {
                 var indices = Find_XZ_WithPosition(itemPositions[i]);
 
                 if (indices.I >= 0 && indices.I < _m.Dimension_I && indices.J >= 0 && indices.J < _m.Dimension_J)
                 {
-                    var currentCellItemIndexes = mcc.Settings.cells_ItemIndexes[indices.I * mcc.Settings.Dimension_J + indices.J];
+                    var currentCellItemIndexes = matricItemData.Settings.cells_ItemIndexes[indices.I * matricItemData.Settings.Dimension_J + indices.J];
                     currentCellItemIndexes.Indexes.Add(i);
                 }
             }

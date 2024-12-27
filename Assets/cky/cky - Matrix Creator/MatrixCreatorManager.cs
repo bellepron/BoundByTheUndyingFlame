@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace cky.MatrixCreation
@@ -30,7 +31,7 @@ namespace cky.MatrixCreation
 
         [Space(15)]
         [Header("Controllers")]
-        public MatrixCreatorController[] controllers;
+        public MatrixItemData[] matrixItemDatas;
 
         private void Awake()
         {
@@ -72,12 +73,15 @@ namespace cky.MatrixCreation
         {
             CreateMatrixCreator();
 
-            //foreach (var controller in controllers)
-            //{
-            //    controller.GetItems(Dimension_I, Dimension_J);
-            //}
-
             MatrixCreator.Create(this);
+
+            IMatrixItem[] allMatrixItems = (IMatrixItem[])FindObjectsByType(typeof(MatrixItem), FindObjectsSortMode.None);
+            Debug.Log($"MatrixItem - All count: {allMatrixItems.Length}");
+
+            foreach (var controller in matrixItemDatas)
+            {
+                controller.GetItems(Dimension_I, Dimension_J, allMatrixItems, MatrixCreator);
+            }
         }
         private void CreateMatrixCreator()
         {

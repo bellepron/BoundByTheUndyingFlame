@@ -32,28 +32,28 @@ namespace cky.MatrixCreation
             I = i;
             J = j;
 
-            itemIndexes_s = new ItemIndexes[manager.controllers.Length];
+            itemIndexes_s = new ItemIndexes[manager.matrixItemDatas.Length];
 
             for (int k = 0; k < itemIndexes_s.Length; k++)
             {
                 //Debug.Log($"{I} - {J}");
-                if (Manager.controllers[k])
+                if (Manager.matrixItemDatas[k] != null)
                 {
-                    if (Manager.controllers[k].Settings)
+                    if (Manager.matrixItemDatas[k].Settings)
                     {
-                        itemIndexes_s[k] = Manager.controllers[k].Settings.cells_ItemIndexes[I * Manager.Dimension_J + J];
+                        itemIndexes_s[k] = Manager.matrixItemDatas[k].Settings.cells_ItemIndexes[I * Manager.Dimension_J + J];
                     }
                     else
                     {
-                        Debug.LogWarning($"{Manager.controllers[k]} Settings parameter is null.");
+                        Debug.LogWarning($"{Manager.matrixItemDatas[k]} Settings parameter is null.");
                     }
                 }
                 else
                 {
-                    Debug.LogWarning($"{Manager.controllers[k]} is null.");
+                    Debug.LogWarning($"{Manager.matrixItemDatas[k]} is null.");
                 }
             }
-            itemTransforms_s = new ItemTransforms[manager.controllers.Length];
+            itemTransforms_s = new ItemTransforms[manager.matrixItemDatas.Length];
             for (int k = 0; k < itemTransforms_s.Length; k++)
             {
                 itemTransforms_s[k] = new ItemTransforms();
@@ -71,22 +71,29 @@ namespace cky.MatrixCreation
                 {
                     foreach (int i in itemIndexes_s[k].Indexes)
                     {
-                        var controller = Manager.controllers[k];
-                        var settings = controller.Settings;
-                        if (controller.ItemPrefab)
+                        var controller = Manager.matrixItemDatas[k];
+                        if (controller.WillCreate)
                         {
-                            var item = CKY_PoolManager.Spawn(controller.ItemPrefab, settings.positions[i], settings.rotations[i]);
-                            if (controller.UseScale) item.localScale = settings.scales[i];
-
-                            if (item.TryGetComponent<IMatrixItem>(out var iMatrixItem))
+                            var settings = controller.Settings;
+                            if (controller.ItemPrefab)
                             {
-                                iMatrixItem.ReSpawn();
+                                var item = CKY_PoolManager.Spawn(controller.ItemPrefab, settings.positions[i], settings.rotations[i]);
+                                if (controller.UseScale) item.localScale = settings.scales[i];
+
+                                if (item.TryGetComponent<IMatrixItem>(out var iMatrixItem))
+                                {
+                                    iMatrixItem.ReSpawn();
+                                }
+                                itemTransforms_s[k].items.Add(item);
                             }
-                            itemTransforms_s[k].items.Add(item);
+                            else
+                            {
+                                Debug.LogWarning($"{controller} ItemPrefab is null.");
+                            }
                         }
                         else
                         {
-                            Debug.LogWarning($"{controller} ItemPrefab is null.");
+                            Debug.LogWarning($"{controller} WillCreate is false.");
                         }
                     }
                 }
