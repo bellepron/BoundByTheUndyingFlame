@@ -18,6 +18,12 @@ namespace cky.MatrixCreation
                 mcm.MatrixSet();
             }
             GUILayout.Space(75);
+
+            if (GUILayout.Button("Place Random"))
+            {
+                mcm.PlaceRandom();
+            }
+            GUILayout.Space(75);
         }
     }
 }

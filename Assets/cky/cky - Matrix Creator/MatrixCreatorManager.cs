@@ -18,7 +18,6 @@ namespace cky.MatrixCreation
         [field: SerializeField] public float AreaWidth_J { get; set; } = 10000f;
         [field: SerializeField] public int Dimension_I { get; set; } = 20;
         [field: SerializeField] public int Dimension_J { get; set; } = 20;
-        //[field: SerializeField] public MatrixCell[,] Matrix { get; set; }
         [field: SerializeField] public MatrixCell[] Matrix { get; set; }
 
         [Space(15)]
@@ -36,6 +35,8 @@ namespace cky.MatrixCreation
         public MatrixItemData[] matrixItemDatas;
         public MatrixItemTypes[] matrixItemTypes;
         public int matrixItemDatasLength;
+        [SerializeField] int countRandom_Min = 25;
+        [SerializeField] int countRandom_Max = 100;
 
         private void Awake()
         {
@@ -89,6 +90,43 @@ namespace cky.MatrixCreation
             MatrixCreator = MatrixCreatorGO.AddComponent<MatrixCreator>();
 
             MatrixCreator.Create(this);
+        }
+
+        #endregion
+
+
+
+        #region Place Random
+
+        public void PlaceRandom()
+        {
+            matrixItemDatasLength = matrixItemDatas.Length;
+
+            for (int i = 0; i < matrixItemDatasLength; i++)
+            {
+                var prefab = matrixItemDatas[i].ItemPrefab;
+                var randomCount = UnityEngine.Random.Range(countRandom_Min, countRandom_Max);
+
+                for (int j = 0; randomCount > j; j++)
+                {
+                    Instantiate(prefab, GetRandomPositionRelativeToObject(), GetRandomRotation());
+                }
+            }
+
+        }
+
+        public Vector3 GetRandomPositionRelativeToObject()
+        {
+            float randomX = UnityEngine.Random.Range(-AreaWidth_J / 2f, AreaWidth_J / 2f);
+            float randomZ = UnityEngine.Random.Range(-AreaWidth_I / 2f, AreaWidth_I / 2f);
+
+            return transform.position + new Vector3(randomX, 0f, randomZ);
+        }
+
+        public Quaternion GetRandomRotation()
+        {
+            float randomY = UnityEngine.Random.Range(0f, 360f); ;
+            return Quaternion.Euler(0f, randomY, 0f);
         }
 
         #endregion
