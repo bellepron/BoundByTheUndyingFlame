@@ -1,8 +1,19 @@
+using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace cky.MatrixCreation
 {
+    //[System.Serializable]
+    //public class ItemDataBLABLA
+    //{
+    //    public Vector3 position;
+    //    public Quaternion rotation;
+    //    public Vector3 scale;
+    //    public List<int> Indexes = new List<int>();
+    //}
+
     [System.Serializable]
     public class MatrixItemData
     {
@@ -40,6 +51,10 @@ namespace cky.MatrixCreation
             }
 
             matrixCreator.AssignItemsToCellsTo_ScriptableObject(this);
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(Settings);
+#endif
         }
     }
 }
