@@ -18,7 +18,7 @@ namespace cky.MatrixCreation
         public MatrixCreatorManager Manager;
 
         [Space(5)]
-        public int i;
+        public int I;
         public int J;
         public List<MatrixCell> neighbours = new List<MatrixCell>();
 
@@ -33,7 +33,7 @@ namespace cky.MatrixCreation
         public void Init(MatrixCreatorManager manager, int I, int J)
         {
             Manager = manager;
-            this.i = I;
+            this.I = I;
             this.J = J;
         }
 
@@ -43,7 +43,9 @@ namespace cky.MatrixCreation
             for (int i = 0; i < Manager.matrixItemDatasLength; i++)
             {
                 matrixData_Types[i] = new MatrixData_Type(Manager.matrixItemTypes[i]);
-                matrixData_Types[i].matrixItemIndexesAndTransforms = Manager.MatrixSettings.matrixData_Type[i].matrixItemIndexesAndTransforms.Where(n => n.I == i && n.J == J).ToList();
+                matrixData_Types[i].matrixItemIndexesAndTransforms = Manager.MatrixSettings.matrixData_Type[i].matrixItemIndexesAndTransforms.Where(n => n.I == I && n.J == J).ToList();
+
+                Debug.Log(matrixData_Types[i].matrixItemIndexesAndTransforms.Count);
             }
 
 #if UNITY_EDITOR

@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 742f74e43966222498f056360a616281, type: 3}
   m_Name: Matrix Settings
   m_EditorClassIdentifier: 
-  Dimension_I: 20
-  Dimension_J: 15
+  Dimension_I: 5
+  Dimension_J: 3
   matrixData_Type:
   - Type: 1
     matrixItemIndexesAndTransforms:
     - I: 0
       J: 0
-      position: {x: -1393, y: 0, z: -1874.2}
+      position: {x: -1146, y: 0, z: -1277}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 20, y: 20, z: 20}
-    - I: 2
+    - I: 0
       J: 0
       position: {x: -1369, y: 0, z: -1499}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 20, y: 20, z: 20}
-    - I: 3
-      J: 2
-      position: {x: -939, y: 0, z: -1325}
+    - I: 0
+      J: 0
+      position: {x: -1425, y: 0, z: -1876}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 20, y: 20, z: 20}
     - I: 0
@@ -37,37 +37,37 @@ MonoBehaviour:
       position: {x: -1393, y: 0, z: -1874.2}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 20, y: 20, z: 20}
-    - I: 3
-      J: 1
-      position: {x: -1146, y: 0, z: -1277}
+    - I: 0
+      J: 0
+      position: {x: -939, y: 0, z: -1325}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 20, y: 20, z: 20}
   - Type: 2
     matrixItemIndexesAndTransforms:
     - I: 0
       J: 0
-      position: {x: -1372, y: 0, z: -1916.6}
+      position: {x: -1119.5, y: 0, z: -1893.5}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 20, y: 20, z: 20}
-    - I: 1
-      J: 3
+    - I: 0
+      J: 0
       position: {x: -818, y: 0, z: -1701}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 20, y: 20, z: 20}
     - I: 0
-      J: 1
-      position: {x: -1119.5, y: 0, z: -1893.5}
+      J: 0
+      position: {x: -1372, y: 0, z: -1916.6}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 20, y: 20, z: 20}
   - Type: 3
     matrixItemIndexesAndTransforms:
     - I: 0
       J: 0
-      position: {x: -1347.7, y: 0, z: -1880.9}
+      position: {x: -1182.5, y: 0, z: -1711.9}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 25, y: 25, z: 25}
-    - I: 1
-      J: 1
-      position: {x: -1182.5, y: 0, z: -1711.9}
+    - I: 0
+      J: 0
+      position: {x: -1347.7, y: 0, z: -1880.9}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 25, y: 25, z: 25}

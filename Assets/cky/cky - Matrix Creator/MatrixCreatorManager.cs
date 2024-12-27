@@ -18,7 +18,8 @@ namespace cky.MatrixCreation
         [field: SerializeField] public float AreaWidth_J { get; set; } = 10000f;
         [field: SerializeField] public int Dimension_I { get; set; } = 20;
         [field: SerializeField] public int Dimension_J { get; set; } = 20;
-        [field: SerializeField] public MatrixCell[,] Matrix { get; set; }
+        //[field: SerializeField] public MatrixCell[,] Matrix { get; set; }
+        [field: SerializeField] public MatrixCell[] Matrix { get; set; }
 
         [Space(15)]
         [Header("Execution")]
