@@ -88,84 +88,83 @@ namespace cky.MatrixCreation
 
         int MatrixIndicesToListIndex(int i, int j) => i * _m.Dimension_J + j;
 
-        //private void AssignCellsNeighbours()
-        //{
-        //    // 8 Komþu için ofsetler
-        //    var neighbourOffsets = new (int, int)[]
-        //    {
-        //        (1, -1),  // Sol üst
-        //        (1, 0),   // Üst
-        //        (1, 1),   // Sað üst
-        //        (0, 1),   // Sað
-        //        (-1, 1),  // Sað alt
-        //        (-1, 0),  // Alt
-        //        (-1, -1), // Sol alt
-        //        (0, -1)   // Sol
-        //    };
-
-        //    for (int i = 0; i < _m.Dimension_I; i++)
-        //    {
-        //        for (int j = 0; j < _m.Dimension_J; j++)
-        //        {
-        //            MatrixCell currentElement = _m.Matrix[MatrixIndicesToListIndex(i, j)];
-
-        //            foreach (var (di, dj) in neighbourOffsets)
-        //            {
-        //                int ni = i + di;
-        //                int nj = j + dj;
-
-        //                // Geçerli komþu kontrolü
-        //                if (ni >= 0 && ni < _m.Dimension_I && nj >= 0 && nj < _m.Dimension_J)
-        //                {
-        //                    currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(ni, nj)]);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
         private void AssignCellsNeighbours()
         {
+            // Offsets for 8 neighbours
+            var neighbourOffsets = new (int, int)[]
+            {
+                (1, -1),  // Left top
+                (1, 0),   // Top
+                (1, 1),   // Right top
+                (0, 1),   // Right
+                (-1, 1),  // Right down
+                (-1, 0),  // Down
+                (-1, -1), // Left down
+                (0, -1)   // Left
+            };
+
             for (int i = 0; i < _m.Dimension_I; i++)
             {
                 for (int j = 0; j < _m.Dimension_J; j++)
                 {
                     MatrixCell currentElement = _m.Matrix[MatrixIndicesToListIndex(i, j)];
 
-                    if (i < _m.Dimension_I - 1 && j > 0) // Sol üst komþu
+                    foreach (var (di, dj) in neighbourOffsets)
                     {
-                        currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i + 1, j - 1)]);
-                    }
-                    if (i < _m.Dimension_I - 1) // Üst komþu
-                    {
-                        currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i + 1, j)]);
-                    }
-                    if (i < _m.Dimension_I - 1 && j < _m.Dimension_J - 1) // Sað üst komþu
-                    {
-                        currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i + 1, j + 1)]);
-                    }
-                    if (j < _m.Dimension_J - 1) // Sað komþu
-                    {
-                        currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i, j + 1)]);
-                    }
-                    if (i > 0 && j < _m.Dimension_J - 1) // Sað alt komþu
-                    {
-                        currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i - 1, j + 1)]);
-                    }
-                    if (i > 0) // Alt komþu
-                    {
-                        currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i - 1, j)]);
-                    }
-                    if (i > 0 && j > 0) // Sol alt komþu
-                    {
-                        currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i - 1, j - 1)]);
-                    }
-                    if (j > 0) // Sol komþu
-                    {
-                        currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i, j - 1)]);
+                        int ni = i + di;
+                        int nj = j + dj;
+
+                        if (ni >= 0 && ni < _m.Dimension_I && nj >= 0 && nj < _m.Dimension_J)
+                        {
+                            currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(ni, nj)]);
+                        }
                     }
                 }
             }
         }
+        //private void AssignCellsNeighbours()
+        //{
+        //    for (int i = 0; i < _m.Dimension_I; i++)
+        //    {
+        //        for (int j = 0; j < _m.Dimension_J; j++)
+        //        {
+        //            MatrixCell currentElement = _m.Matrix[MatrixIndicesToListIndex(i, j)];
+
+        //            if (i < _m.Dimension_I - 1 && j > 0) // Sol üst komþu
+        //            {
+        //                currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i + 1, j - 1)]);
+        //            }
+        //            if (i < _m.Dimension_I - 1) // Üst komþu
+        //            {
+        //                currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i + 1, j)]);
+        //            }
+        //            if (i < _m.Dimension_I - 1 && j < _m.Dimension_J - 1) // Sað üst komþu
+        //            {
+        //                currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i + 1, j + 1)]);
+        //            }
+        //            if (j < _m.Dimension_J - 1) // Sað komþu
+        //            {
+        //                currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i, j + 1)]);
+        //            }
+        //            if (i > 0 && j < _m.Dimension_J - 1) // Sað alt komþu
+        //            {
+        //                currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i - 1, j + 1)]);
+        //            }
+        //            if (i > 0) // Alt komþu
+        //            {
+        //                currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i - 1, j)]);
+        //            }
+        //            if (i > 0 && j > 0) // Sol alt komþu
+        //            {
+        //                currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i - 1, j - 1)]);
+        //            }
+        //            if (j > 0) // Sol komþu
+        //            {
+        //                currentElement.neighbours.Add(_m.Matrix[MatrixIndicesToListIndex(i, j - 1)]);
+        //            }
+        //        }
+        //    }
+        //}
 
 
 

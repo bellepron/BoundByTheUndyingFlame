@@ -100,6 +100,8 @@ namespace cky.MatrixCreation
 
         public void PlaceRandom()
         {
+            var ObjectsParentTransform = new GameObject("Objects Parent").transform;
+
             matrixItemDatasLength = matrixItemDatas.Length;
 
             for (int i = 0; i < matrixItemDatasLength; i++)
@@ -109,10 +111,10 @@ namespace cky.MatrixCreation
 
                 for (int j = 0; randomCount > j; j++)
                 {
-                    Instantiate(prefab, GetRandomPositionRelativeToObject(), GetRandomRotation());
+                    var obj = Instantiate(prefab, GetRandomPositionRelativeToObject(), GetRandomRotation());
+                    obj.parent = ObjectsParentTransform;
                 }
             }
-
         }
 
         public Vector3 GetRandomPositionRelativeToObject()

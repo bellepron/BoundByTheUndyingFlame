@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace cky.MatrixCreation
 {
-    [CreateAssetMenu(menuName = "cky/Matrix Creation/New Matrix Settings2", fileName = "New Matrix Settings2")]
+    [CreateAssetMenu(menuName = "cky/Matrix Creation/New Matrix Settings", fileName = "New Matrix Settings")]
     public class MatrixSettings : ScriptableObject
     {
         public int Dimension_I;
