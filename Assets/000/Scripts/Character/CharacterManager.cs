@@ -38,5 +38,10 @@ namespace BBTUF
                     characterNetworkManager.networkRotationSmoothTime);
             }
         }
+
+        protected virtual void LateUpdate()
+        {
+
+        }
     }
 }
