@@ -17,6 +17,11 @@ namespace BBTUF
         {
             base.Update();
 
+            if(!IsOwner)
+            {
+                return;
+            }
+
             playerLocomotionManager.HandleAllMovement();
         }
     }

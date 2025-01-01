@@ -10,6 +10,9 @@ namespace BBTUF
         PlayerControls playerControls;
 
         [SerializeField] Vector2 movementInput;
+        public float verticalýnput;
+        public float horizontalInput;
+        public float moveAmount;
 
         private void Awake()
         {
@@ -63,6 +66,43 @@ namespace BBTUF
         private void OnDestroy()
         {
             SceneManager.activeSceneChanged -= OnSceneChange;
+        }
+
+        private void OnApplicationFocus(bool focus)
+        {
+            if (enabled)
+            {
+                if (focus)
+                {
+                    playerControls.Enable();
+                }
+                else
+                {
+                    playerControls.Disable();
+                }
+            }
+        }
+
+        private void Update()
+        {
+            HandleMovementInput();
+        }
+
+        private void HandleMovementInput()
+        {
+            verticalýnput = movementInput.y;
+            horizontalInput = movementInput.x;
+
+            moveAmount = Mathf.Clamp01(Mathf.Abs(verticalýnput) + Mathf.Abs(horizontalInput));
+
+            if (moveAmount <= 0.5f && moveAmount > 0)
+            {
+                moveAmount = 0.5f;
+            }
+            else if (moveAmount > 0.5f && moveAmount <= 1)
+            {
+                moveAmount = 1;
+            }
         }
     }
 }
