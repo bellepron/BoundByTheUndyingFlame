@@ -9,10 +9,16 @@ namespace BBTUF
 
         PlayerControls playerControls;
 
-        [SerializeField] Vector2 movementInput;
-        public float verticalýnput;
-        public float horizontalInput;
+        [Header("Input Player Movement")]
+        [SerializeField] Vector2 inputMovement;
+        public float inputVertical;
+        public float inputHorizontal;
         public float moveAmount;
+
+        [Header("Input Camera Movement")]
+        [SerializeField] Vector2 inputCamera;
+        public float inputCameraVertival;
+        public float inputCameraHorizontal;
 
         private void Awake()
         {
@@ -57,7 +63,8 @@ namespace BBTUF
             {
                 playerControls = new PlayerControls();
 
-                playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+                playerControls.PlayerMovement.Movement.performed += i => inputMovement = i.ReadValue<Vector2>();
+                playerControls.PlayerCamera.Movement.performed += i => inputCamera = i.ReadValue<Vector2>();
             }
 
             playerControls.Enable();
@@ -85,15 +92,16 @@ namespace BBTUF
 
         private void Update()
         {
-            HandleMovementInput();
+            HandlePlayerMovementInput();
+            HandleCameraMovementInput();
         }
 
-        private void HandleMovementInput()
+        private void HandlePlayerMovementInput()
         {
-            verticalýnput = movementInput.y;
-            horizontalInput = movementInput.x;
+            inputVertical = inputMovement.y;
+            inputHorizontal = inputMovement.x;
 
-            moveAmount = Mathf.Clamp01(Mathf.Abs(verticalýnput) + Mathf.Abs(horizontalInput));
+            moveAmount = Mathf.Clamp01(Mathf.Abs(inputVertical) + Mathf.Abs(inputHorizontal));
 
             if (moveAmount <= 0.5f && moveAmount > 0)
             {
@@ -103,6 +111,12 @@ namespace BBTUF
             {
                 moveAmount = 1;
             }
+        }
+
+        private void HandleCameraMovementInput()
+        {
+            inputCameraVertival = inputCamera.y;
+            inputCameraHorizontal = inputCamera.x;
         }
     }
 }

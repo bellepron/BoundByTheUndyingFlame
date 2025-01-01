@@ -31,8 +31,8 @@ namespace BBTUF
 
         private void GetVerticalAndHorizontalInputs()
         {
-            verticalMovement = PlayerInputManager.instance.verticalýnput;
-            horizontalMovement = PlayerInputManager.instance.horizontalInput;
+            verticalMovement = PlayerInputManager.instance.inputVertical;
+            horizontalMovement = PlayerInputManager.instance.inputHorizontal;
         }
 
         private void HandleGroundedMovement()
@@ -44,7 +44,6 @@ namespace BBTUF
             moveDirection.Normalize();
             moveDirection.y = 0;
 
-            Debug.Log(PlayerInputManager.instance.moveAmount);
             if (PlayerInputManager.instance.moveAmount > 0.5f)
             {
                 player.characterController.Move(moveDirection * speed_Running * Time.deltaTime);

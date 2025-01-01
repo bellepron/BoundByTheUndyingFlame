@@ -1240,10 +1240,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ba9a806f87d43441bcf5ec50570dac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementInput: {x: 0, y: 0}
-  "vertical\u0131nput": 0
-  horizontalInput: 0
+  inputMovement: {x: 0, y: 0}
+  inputVertical: 0
+  inputHorizontal: 0
   moveAmount: 0
+  inputCamera: {x: 0, y: 0}
+  inputCameraVertival: 0
+  inputCameraHorizontal: 0
 --- !u!4 &1809104890
 Transform:
   m_ObjectHideFlags: 0
@@ -1433,7 +1436,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 211321839053247330, guid: 0b0af4b4b9b7d7c448fcdca0138390c7, type: 3}
       propertyPath: m_Name
-      value: Player Camera
+      value: Player Camera (Left & Right)
       objectReference: {fileID: 0}
     - target: {fileID: 4576414778434309367, guid: 0b0af4b4b9b7d7c448fcdca0138390c7, type: 3}
       propertyPath: m_LocalPosition.x
