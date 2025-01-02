@@ -129,14 +129,14 @@
             ]
         },
         {
-            "name": "Player Camera",
-            "id": "3bcadbdc-75ef-49ac-a151-dda889365a61",
+            "name": "Player Actions",
+            "id": "06f74e20-4264-4266-a8a8-2e20351c7153",
             "actions": [
                 {
-                    "name": "Movement",
-                    "type": "PassThrough",
-                    "id": "4417fee2-23ff-490e-99c3-2d6c499620c2",
-                    "expectedControlType": "Vector2",
+                    "name": "Dodge",
+                    "type": "Button",
+                    "id": "e9a415d0-ba56-48cb-a69e-86e5d3071fbd",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -144,59 +144,54 @@
             ],
             "bindings": [
                 {
-                    "name": "Mouse",
-                    "id": "fa8ddffd-715f-4db7-8161-6306ee902d79",
-                    "path": "2DVector",
+                    "name": "",
+                    "id": "0dde31c1-9c90-4e01-8c27-9ea73eab0d2e",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
-                    "isComposite": true,
+                    "action": "Dodge",
+                    "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "07f97489-0ae5-4395-95e8-e725ec7abd46",
-                    "path": "<Mouse>/delta/up",
+                    "name": "",
+                    "id": "e29c7cc9-64f1-4a99-815a-5ded1c7442b6",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "Dodge",
                     "isComposite": false,
-                    "isPartOfComposite": true
-                },
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player Camera",
+            "id": "3bcadbdc-75ef-49ac-a151-dda889365a61",
+            "actions": [
                 {
-                    "name": "down",
-                    "id": "245effd7-14f9-41fc-83a4-6b7a9d3b8e48",
-                    "path": "<Mouse>/delta/down",
-                    "interactions": "",
+                    "name": "Movement",
+                    "type": "PassThrough",
+                    "id": "4417fee2-23ff-490e-99c3-2d6c499620c2",
+                    "expectedControlType": "Delta",
                     "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
                 {
-                    "name": "left",
-                    "id": "35d3b4f8-ea3b-4295-b66d-e096ba1dd38f",
-                    "path": "<Mouse>/delta/left",
+                    "name": "",
+                    "id": "5bc93e89-4214-41cb-8143-bc325aaae617",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Movement",
                     "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "1dce0bae-0c96-491a-8ca9-7fc54afc21a2",
-                    "path": "<Mouse>/delta/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "Right Stick",
@@ -210,7 +205,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
+                    "name": "Up",
                     "id": "d35cf65f-8346-4ba9-8e6f-3033b74a00d6",
                     "path": "<Gamepad>/rightStick/up",
                     "interactions": "",
@@ -221,7 +216,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "down",
+                    "name": "Down",
                     "id": "47a41473-6069-4c6c-9bcd-1ec217878778",
                     "path": "<Gamepad>/rightStick/down",
                     "interactions": "",
@@ -232,8 +227,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
-                    "id": "d788c4b7-9c30-4d9e-a0cf-8ddd3dd87a50",
+                    "name": "Left",
+                    "id": "fa658837-93a6-423f-93f2-91767a7586b6",
                     "path": "<Gamepad>/rightStick/left",
                     "interactions": "",
                     "processors": "",
@@ -243,8 +238,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
-                    "id": "6e7ae839-b741-4e36-9052-a2c78792d1e3",
+                    "name": "Right",
+                    "id": "557d7494-b5e9-4b8e-a137-e611cddaef36",
                     "path": "<Gamepad>/rightStick/right",
                     "interactions": "",
                     "processors": "",

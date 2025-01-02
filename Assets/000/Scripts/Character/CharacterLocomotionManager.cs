@@ -8,5 +8,10 @@ namespace BBTUF
         {
 
         }
+
+        protected virtual void Update()
+        {
+
+        }
     }
 }

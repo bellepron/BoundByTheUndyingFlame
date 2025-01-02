@@ -7,7 +7,14 @@ namespace BBTUF
     {
         public static PlayerInputManager instance;
 
+        public PlayerManager player;
+
         PlayerControls playerControls;
+
+        [Header("Input Camera Movement")]
+        [SerializeField] Vector2 inputCamera;
+        public float inputCameraVertival;
+        public float inputCameraHorizontal;
 
         [Header("Input Player Movement")]
         [SerializeField] Vector2 inputMovement;
@@ -15,10 +22,8 @@ namespace BBTUF
         public float inputHorizontal;
         public float moveAmount;
 
-        [Header("Input Camera Movement")]
-        [SerializeField] Vector2 inputCamera;
-        public float inputCameraVertival;
-        public float inputCameraHorizontal;
+        [Header("Input Player Action")]
+        [SerializeField] bool inputDodge = false;
 
         private void Awake()
         {
@@ -42,6 +47,7 @@ namespace BBTUF
             instance.enabled = false;
         }
 
+        // If minimize or lower the window, stop adjusting inputs
         private void OnSceneChange(Scene oldScene, Scene newScene)
         {
             // If we are loading into our world scene, enable our players controls.
@@ -65,6 +71,7 @@ namespace BBTUF
 
                 playerControls.PlayerMovement.Movement.performed += i => inputMovement = i.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += i => inputCamera = i.ReadValue<Vector2>();
+                playerControls.PlayerActions.Dodge.performed += i => inputDodge = true;
             }
 
             playerControls.Enable();
@@ -92,9 +99,17 @@ namespace BBTUF
 
         private void Update()
         {
+            HandleAllInputs();
+        }
+
+        private void HandleAllInputs()
+        {
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
+            HandleDodgeInput();
         }
+
+        // Movement
 
         private void HandlePlayerMovementInput()
         {
@@ -111,12 +126,29 @@ namespace BBTUF
             {
                 moveAmount = 1;
             }
+
+            if (player == null)
+                return;
+
+            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
         }
 
         private void HandleCameraMovementInput()
         {
             inputCameraVertival = inputCamera.y;
             inputCameraHorizontal = inputCamera.x;
+        }
+
+        // Action
+
+        private void HandleDodgeInput()
+        {
+            if (inputDodge)
+            {
+                inputDodge = false;
+
+                player.playerLocomotionManager.AttemptToPerformDodge();
+            }
         }
     }
 }
